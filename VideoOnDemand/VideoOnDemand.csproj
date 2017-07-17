@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
@@ -8,7 +8,12 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-VideoOnDemand-20b545f4-f70f-4d5b-81ec-0682bdbeb055</UserSecretsId>
   </PropertyGroup>
+
   <ItemGroup>
+    <Content Include="wwwroot\css\login.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
