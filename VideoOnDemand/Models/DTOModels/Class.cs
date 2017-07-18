@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace VideoOnDemand.Models.DTOModules
+namespace VideoOnDemand.Models.DTOModels
 {
     public class Class
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace VideoOnDemand.Models.DTOModules
+namespace VideoOnDemand.Models.DTOModels
 {
     public class CourseDTO
     {
@@ -15,3 +15,4 @@ namespace VideoOnDemand.Models.DTOModules
 
     }
 }
+
