@@ -120,9 +120,28 @@ namespace VideoOnDemand.Repositories
                 module.Downloads = _downloads.Where(d => d.ModuleId.Equals(module.Id)).ToList();
                 module.Videos = _videos.Where(v => v.ModuleId.Equals(module.Id)).ToList();
             }
-            return course;  // I think that return goes here (using course variable, but would it work in the foreach area?
+            return course;  
         }
 
+        public Video GetVideo(string userId, int videoId)
+        {
+            var video = _videos.Where(v => v.Id.Equals(videoId))
+                .Join(_userCourses, v => v.CourseId, uc => uc.CourseId, 
+                    (v, uc) => new { Video = v, UserCourse = uc })
+                .Where(vuc => vuc.UserCourse.UserId.Equals(userId))
+                .FirstOrDefault().Video;
+
+            return video;
+        }
+
+        public IEnumerable<Video> GetVideos(string userId, int moduleId = default(int))
+        {
+            var videos = _videos.Join(_userCourses, v => v.CourseId, uc => uc.CourseId,
+                    (v, uc) => new { Video = v, UserCourse = uc })
+                    .Where(vuc => vuc.UserCourse.UserId.Equals(userId));
+            return moduleId.Equals(0) ? videos.Select(s => s.Video) :
+                videos.Where(v => v.Video.ModuleId.Equals(moduleId)).Select(s => s.Video);
+        }
 
         #endregion
 

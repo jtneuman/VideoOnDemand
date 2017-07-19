@@ -19,11 +19,17 @@ namespace VideoOnDemand.Controllers
         }
         public IActionResult Index()
         {
-            var rep = new MockReadRepository();
-            // Get all courses for user
-            var courses = rep.GetCourses("e28bcfc0-fe61-4c69-867e-3532527dbb64");
-            // Get single course
-            var course = rep.GetCourse("e28bcfc0-fe61-4c69-867e-3532527dbb64", 1);
+            //var rep = new MockReadRepository();
+            //// Get all courses for user
+            //var courses = rep.GetCourses("e28bcfc0-fe61-4c69-867e-3532527dbb64");
+            //// Get single course
+            //var course = rep.GetCourse("e28bcfc0-fe61-4c69-867e-3532527dbb64", 1);
+
+            //var video = rep.GetVideo("e28bcfc0-fe61-4c69-867e-3532527dbb64", 1);
+
+            //var videos = rep.GetVideos("e28bcfc0-fe61-4c69-867e-3532527dbb64");
+
+            //var videosForModule = rep.GetVideos("e28bcfc0-fe61-4c69-867e-3532527dbb64", 1);
 
             //check if user is signed in and redirect to login in AcctContr if anonymous; otherwise open default view
             if (!_signInManager.IsSignedIn(User))
