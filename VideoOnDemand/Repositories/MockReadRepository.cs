@@ -89,6 +89,44 @@ namespace VideoOnDemand.Repositories
 
         #endregion
 
+        #region Methods
+
+        public IEnumerable<Course> GetCourses(string userId)
+        {
+            var courses = _userCourses.Where(uc => uc.UserId.Equals(userId))
+                .Join(_courses, uc => uc.CourseId, c => c.Id, (uc, c) => new { Course = c })
+                .Select(s => s.Course);
+            
+            foreach (var course in courses)
+            {
+                course.Instructor = _instructors.SingleOrDefault(s => s.Id.Equals(course.InstructorId));
+                course.Modules = _modules.Where(m => m.CourseId.Equals(course.Id)).ToList();
+            }
+            return courses;
+        }
+
+        public Course GetCourse(string userId, int courseId)
+        {
+            var course = _userCourses.Where(uc => uc.UserId.Equals(userId))
+                .Join(_courses, uc => uc.CourseId, c => c.Id, (uc, c) => new { Course = c })
+                .SingleOrDefault(s => s.Course.Id.Equals(courseId)).Course;
+
+            course.Instructor = _instructors.SingleOrDefault(s => s.Id.Equals(course.InstructorId));
+
+            course.Modules = _modules.Where(m => m.CourseId.Equals(course.Id)).ToList();
+
+            foreach(var module in course.Modules)
+            {
+                module.Downloads = _downloads.Where(d => d.ModuleId.Equals(module.Id)).ToList();
+                module.Videos = _videos.Where(v => v.ModuleId.Equals(module.Id)).ToList();
+            }
+            return course;  // I think that return goes here (using course variable, but would it work in the foreach area?
+        }
+
+
+        #endregion
+
+
 
     }
 }
