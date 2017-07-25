@@ -70,13 +70,48 @@ namespace VideoOnDemand.Controllers
                 Modules = mappedModuleDTOs
             };
 
-            return View();
+            return View(courseModel);
         }
 
         [HttpGet]
         public IActionResult Video(int id)
         {
-            return View();
+            var video = _db.GetVideo(_userId, id);
+            var course = _db.GetCourse(_userId, video.CourseId);
+            var mappedVideoDTO = _mapper.Map<VideoDTO>(video);
+            var mappedCourseDTO = _mapper.Map<CourseDTO>(course);
+            var mappedInstructorDTO = _mapper.Map<InstructorDTO>(course.Instructor);
+            var videos = _db.GetVideos(_userId, video.ModuleId).ToList();
+
+            var count = videos.Count();
+            var index = videos.IndexOf(video);
+
+            // getting id of the previous video in the module
+            var previous = videos.ElementAtOrDefault(index - 1);
+            var previousId = previous == null ? 0 : previous.Id;
+            // getting remaining items in same fashion
+            var next = videos.ElementAtOrDefault(index + 1);
+            var nextId = next == null ? 0 : next.Id;
+            var nextTitle = next == null ? string.Empty : next.Title;
+            var nextThumb = next == null ? string.Empty : next.Thumbnail;
+
+            // Creating the VM instance for transfer to the view
+            var videoModel = new VideoViewModel
+            {
+                Video = mappedVideoDTO,
+                Instructor = mappedInstructorDTO,
+                Course = mappedCourseDTO,
+                LessonInfo = new LessonInfoDTO
+                {
+                    LessonNumber = index + 1,
+                    NumberOfLessons = count,
+                    NextVideoId = nextId,
+                    PreviousVideoId = previousId,
+                    NextVideoTitle = nextTitle,
+                    NextVideoThumbnail = nextThumb
+                }
+            };
+            return View(videoModel);
         }
     }
 }
