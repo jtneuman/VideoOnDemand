@@ -1,0 +1,11 @@
+﻿.membership.top-margin{
+    margin-top: 25px;
+}
+
+.membership h2{
+    font-size: 1.5em;
+}
+
+.membership .text-dark{
+    color: #454c56 !important;
+}
