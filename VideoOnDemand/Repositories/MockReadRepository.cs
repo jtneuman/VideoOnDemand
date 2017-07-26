@@ -34,7 +34,7 @@ namespace VideoOnDemand.Repositories
             new UserCourse{ UserId = "e28bcfc0-fe61-4c69-867e-3532527dbb64",
                 CourseId = 3},
             new UserCourse{ UserId = "e28bcfc0-fe61-4c69-867e-3532527dbb64",
-                CourseId =4} //this was a 1 in book.
+                CourseId = 1} //this was a 1 in book.
         };
 
         List<Module> _modules = new List<Module>
