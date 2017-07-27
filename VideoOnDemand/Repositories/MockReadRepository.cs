@@ -73,19 +73,19 @@ namespace VideoOnDemand.Repositories
             new Video{ Id = 1, ModuleId = 1, CourseId = 1, Position = 1,
                 Title = "Video 1 Title", Description = "Video 1 Description: A very long description.",
                 Duration = 50, Thumbnail = "/images/video1.jpg",
-                Url = "http://some_url/manifest"},
+                Url = "https://content.jwplatform.com/libraries/Zbhm1h0u.js"},
             new Video{ Id =2, ModuleId = 1, CourseId = 1, Position = 2,
                 Title = "Video 2 Title", Description = "Video 2 Description:" +
                 "A very long description.", Duration = 45,
-                Thumbnail = "/images/video2.jpg", Url = "http://some_url/manifest"},
+                Thumbnail = "/images/video2.jpg", Url = "https://content.jwplatform.com/libraries/Zbhm1h0u.js"},
             new Video{ Id = 3, ModuleId =3, CourseId = 2, Position = 1,
                 Title = "Video 3 Title", Description = "Video 3 Description:" +
                 "A very long description", Duration = 41,
-                Thumbnail = "/images/video3.jpg", Url = "http://some_url/manifest"},
+                Thumbnail = "/images/video3.jpg", Url = "https://content.jwplatform.com/libraries/Zbhm1h0u.js"},
             new Video{ Id = 4, ModuleId = 2, CourseId = 1, Position = 1,
                 Title = "Video 4 Title", Description = "Video 4 Description:" +
                 "A very long description", Duration = 42,
-                Thumbnail = "http://some_url/manifest"}
+                Thumbnail = "https://content.jwplatform.com/libraries/Zbhm1h0u.js"}
         };
 
         #endregion
