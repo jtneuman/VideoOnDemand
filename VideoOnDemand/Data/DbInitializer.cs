@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,12 +11,13 @@ namespace VideoOnDemand.Data
     {
         public static void Initialize(ApplicationDbContext context)
         {
-            var description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,";
+            var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
             // If you need to recreate the database then uncomment these two code lines.
             // All data will be deleted with the database and cannot be recovered.
-            // context.Database.EnsureDeleted();
-            // context.Database.EnsureCreated();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+            context.Database.Migrate();
 
             // Look for any courses to check if the DB has been seeded.
             if (context.Instructors.Any())
@@ -48,8 +50,8 @@ namespace VideoOnDemand.Data
 
             var userCourses = new List<UserCourse>
             {
-                new UserCourse { UserId = "649112c5-a8e9-4312-9fff-fbec8d717f99", CourseId = 1 },
-                new UserCourse { UserId = "649112c5-a8e9-4312-9fff-fbec8d717f99", CourseId = 3 }
+                new UserCourse { UserId = "f3e57d06-15d3-4b2e-a240-446dd5833fc5", CourseId = 1 },
+                new UserCourse { UserId = "f3e57d06-15d3-4b2e-a240-446dd5833fc5", CourseId = 3 }
             };
             context.UserCourses.AddRange(userCourses);
             context.SaveChanges();
@@ -65,11 +67,11 @@ namespace VideoOnDemand.Data
 
             var videos = new List<Video>
             {
-                new Video { Id = 1, ModuleId = 1, CourseId = 1, Position = 1, Title = "Video 1 Title", Description = "Video 1 Description: Some description that is very very long and longer still", Duration = 50, Thumbnail = "/images/video1.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" },
-                new Video { Id = 2, ModuleId = 1, CourseId = 1, Position = 2, Title = "Video 2 Title", Description = "Video 2 Description: Some description that is very very long and longer still", Duration = 45, Thumbnail = "/images/video2.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" },
-                new Video { Id = 3, ModuleId = 1, CourseId = 1, Position = 3, Title = "Video 3 Title", Description = "Video 3 Description: Some description that is very very long and longer still", Duration = 41, Thumbnail = "/images/video3.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" },
-                new Video { Id = 4, ModuleId = 3, CourseId = 2, Position = 1, Title = "Video 4 Title", Description = "Video 4 Description: Some description that is very very long and longer still", Duration = 41, Thumbnail = "/images/video4.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" },
-                new Video { Id = 5, ModuleId = 2, CourseId = 1, Position = 1, Title = "Video 5 Title", Description = "Video 5 Description: Some description that is very very long and longer still", Duration = 42, Thumbnail = "/images/video5.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" }
+                new Video { ModuleId = 1, CourseId = 1, Position = 1, Title = "Video 1 Title", Description = "Video 1 Description: Some description that is very very long and longer still", Duration = 50, Thumbnail = "/images/video1.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" },
+                new Video { ModuleId = 1, CourseId = 1, Position = 2, Title = "Video 2 Title", Description = "Video 2 Description: Some description that is very very long and longer still", Duration = 45, Thumbnail = "/images/video2.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" },
+                new Video { ModuleId = 1, CourseId = 1, Position = 3, Title = "Video 3 Title", Description = "Video 3 Description: Some description that is very very long and longer still", Duration = 41, Thumbnail = "/images/video3.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" },
+                new Video { ModuleId = 3, CourseId = 2, Position = 1, Title = "Video 4 Title", Description = "Video 4 Description: Some description that is very very long and longer still", Duration = 41, Thumbnail = "/images/video4.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" },
+                new Video { ModuleId = 2, CourseId = 1, Position = 1, Title = "Video 5 Title", Description = "Video 5 Description: Some description that is very very long and longer still", Duration = 42, Thumbnail = "/images/video5.jpg", Url = "https://www.youtube.com/watch?v=BJFyzpBcaCY" }
             };
             context.Videos.AddRange(videos);
             context.SaveChanges();
