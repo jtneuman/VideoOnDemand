@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - VideoOnDemand</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i" rel="stylesheet" />
+
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -20,11 +22,6 @@
         <link rel="stylesheet" href="~/css/instructor-bio.css" />
         <link rel="stylesheet" href="~/css/module.css" />
         <link rel="stylesheet" href="~/css/video.css" />
-      
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i" rel="stylesheet" />
-
-        <!-- not sure if this is how to add a link to a JWPlayer or not? -->
-        <script src="https://content.jwplatform.com/libraries/Zbhm1h0u.js"></script>
 
     </environment>
     <environment names="Staging,Production">
@@ -80,7 +77,8 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-
+        <!-- not sure if this is how to add a link to a JWPlayer or not? -->
+        <script src="https://content.jwplatform.com/libraries/Zbhm1h0u.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -96,6 +94,8 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <!-- not sure if this is how to add a link to a JWPlayer or not? -->
+        <script src="https://content.jwplatform.com/libraries/Zbhm1h0u.js"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)
