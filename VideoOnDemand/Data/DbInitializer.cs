@@ -17,7 +17,7 @@ namespace VideoOnDemand.Data
             // All data will be deleted with the database and cannot be recovered.
             //context.Database.EnsureDeleted();
             //context.Database.EnsureCreated();
-            context.Database.Migrate();
+            //context.Database.Migrate();
 
             // Look for any courses to check if the DB has been seeded.
             if (context.Instructors.Any())
