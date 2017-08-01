@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;  // used in tutorials DbInitializer class.
 using System.Threading.Tasks;
 using VideoOnDemand.Entities;
 
@@ -11,8 +12,9 @@ namespace VideoOnDemand.Data
     {
         public static void Initialize(ApplicationDbContext context)
         {
+#region seed data
             var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-
+#endregion
             // If you need to recreate the database then uncomment these two code lines.
             // All data will be deleted with the database and cannot be recovered.
             //context.Database.EnsureDeleted();
@@ -50,8 +52,8 @@ namespace VideoOnDemand.Data
 
             var userCourses = new List<UserCourse>
             {
-                new UserCourse { UserId = "f3e57d06-15d3-4b2e-a240-446dd5833fc5", CourseId = 1 },
-                new UserCourse { UserId = "f3e57d06-15d3-4b2e-a240-446dd5833fc5", CourseId = 3 }
+                new UserCourse { UserId = "94f817fc-dab1-499a-b95a-820e4f4d15a4", CourseId = 1 },
+                new UserCourse { UserId = "94f817fc-dab1-499a-b95a-820e4f4d15a4", CourseId = 3 }
             };
             context.UserCourses.AddRange(userCourses);
             context.SaveChanges();
