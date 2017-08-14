@@ -7,29 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using VideoOnDemand.Data;
 using VideoOnDemand.Entities;
-using Microsoft.AspNetCore.Authorization;
 
 namespace VideoOnDemand.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Route("admin/[controller]/[action]")]
-    public class CoursesController : Controller
+    public class ModulesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CoursesController(ApplicationDbContext context)
+        public ModulesController(ApplicationDbContext context)
         {
             _context = context;    
         }
 
-        // GET: Courses
+        // GET: Modules
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Courses.Include(c => c.Instructor);
+            var applicationDbContext = _context.Modules.Include(m => m.Course);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Courses/Details/5
+        // GET: Modules/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,42 +34,42 @@ namespace VideoOnDemand.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses
-                .Include(c => c.Instructor)
+            var module = await _context.Modules
+                .Include(m => m.Course)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            if (module == null)
             {
                 return NotFound();
             }
 
-            return View(course);
+            return View(module);
         }
 
-        // GET: Courses/Create
+        // GET: Modules/Create
         public IActionResult Create()
         {
-            ViewData["InstructorId"] = new SelectList(_context.Instructors, "Id", "Name");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Title");
             return View();
         }
 
-        // POST: Courses/Create
+        // POST: Modules/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImageUrl,MarqueeImageUrl,Title,Description,InstructorId")] Course course)
+        public async Task<IActionResult> Create([Bind("Id,Title,CourseId")] Module @module)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(course);
+                _context.Add(@module);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewData["InstructorId"] = new SelectList(_context.Instructors, "Id", "Name", course.InstructorId);
-            return View(course);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Title", @module.CourseId);
+            return View(@module);
         }
 
-        // GET: Courses/Edit/5
+        // GET: Modules/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,23 +77,23 @@ namespace VideoOnDemand.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses.SingleOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            var @module = await _context.Modules.SingleOrDefaultAsync(m => m.Id == id);
+            if (@module == null)
             {
                 return NotFound();
             }
-            ViewData["InstructorId"] = new SelectList(_context.Instructors, "Id", "Name", course.InstructorId);
-            return View(course);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Title", @module.CourseId);
+            return View(@module);
         }
 
-        // POST: Courses/Edit/5
+        // POST: Modules/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageUrl,MarqueeImageUrl,Title,Description,InstructorId")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,CourseId")] Module @module)
         {
-            if (id != course.Id)
+            if (id != @module.Id)
             {
                 return NotFound();
             }
@@ -105,12 +102,12 @@ namespace VideoOnDemand.Controllers
             {
                 try
                 {
-                    _context.Update(course);
+                    _context.Update(@module);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CourseExists(course.Id))
+                    if (!ModuleExists(@module.Id))
                     {
                         return NotFound();
                     }
@@ -121,11 +118,11 @@ namespace VideoOnDemand.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["InstructorId"] = new SelectList(_context.Instructors, "Id", "Name", course.InstructorId);
-            return View(course);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Title", @module.CourseId);
+            return View(@module);
         }
 
-        // GET: Courses/Delete/5
+        // GET: Modules/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -133,31 +130,31 @@ namespace VideoOnDemand.Controllers
                 return NotFound();
             }
 
-            var course = await _context.Courses
-                .Include(c => c.Instructor)
+            var module = await _context.Modules
+                .Include(m => m.Course)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            if (module == null)
             {
                 return NotFound();
             }
 
-            return View(course);
+            return View(module);
         }
 
-        // POST: Courses/Delete/5
+        // POST: Modules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var course = await _context.Courses.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Courses.Remove(course);
+            var @module = await _context.Modules.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Modules.Remove(@module);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        private bool CourseExists(int id)
+        private bool ModuleExists(int id)
         {
-            return _context.Courses.Any(e => e.Id == id);
+            return _context.Modules.Any(e => e.Id == id);
         }
     }
 }
