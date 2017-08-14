@@ -46,6 +46,8 @@ namespace VideoOnDemand.Controllers
         // GET: Videos/Create
         public IActionResult Create()
         {
+            // this is display the models in the drop down list in the create view
+            ViewData["ModuleId"] = new SelectList(_context.Modules, "Id", "Title");
             return View();
         }
 
@@ -62,6 +64,7 @@ namespace VideoOnDemand.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewData["ModuleId"] = new SelectList(_context.Modules, "Id", "Title");
             return View(video);
         }
 
@@ -78,6 +81,7 @@ namespace VideoOnDemand.Controllers
             {
                 return NotFound();
             }
+            ViewData["ModuleId"] = new SelectList(_context.Modules, "Id", "Title");
             return View(video);
         }
 
@@ -113,6 +117,7 @@ namespace VideoOnDemand.Controllers
                 }
                 return RedirectToAction("Index");
             }
+            ViewData["ModuleId"] = new SelectList(_context.Modules, "Id", "Title");
             return View(video);
         }
 
