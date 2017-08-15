@@ -38,7 +38,8 @@
                         @Html.DisplayFor(modelItem => item.CourseId)
                     </td>*@
                 <td>
-                    <a asp-action="Edit" asp-route-courseId="@item.CourseId" aso-route-userId="@item.UserId">Edit</a> |
+                    @*Edit link not working initially because "asp-route-userId" came through as "as(o)-route-userId"*@
+                    <a asp-action="Edit" asp-route-courseId="@item.CourseId" asp-route-userId="@item.UserId">Edit</a> |
                     <a asp-action="Details" asp-route-courseId="@item.CourseId" asp-route-UserId="@item.UserId">Details</a> |
                     <a asp-action="Delete" asp-route-courseId="@item.CourseId" asp-route-UserId="@item.UserId">Delete</a>
                 </td>
