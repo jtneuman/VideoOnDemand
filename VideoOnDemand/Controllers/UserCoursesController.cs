@@ -10,11 +10,14 @@ using VideoOnDemand.Models.DTOModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using VideoOnDemand.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace VideoOnDemand.Controllers
 {
+    [Authorize(Roles = "Admin")]
+    [Route("admin/[controller]/[action]")]
     public class UserCoursesController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -185,6 +188,18 @@ namespace VideoOnDemand.Controllers
                 return NotFound();
             }
             return View(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string userId, int courseId)
+        {
+            var userCourse = await _db.UserCourses.SingleOrDefaultAsync(
+                m => m.UserId.Equals(userId) && m.CourseId.Equals(courseId));
+            _db.UserCourses.Remove(userCourse);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
+
         }
 
     }
