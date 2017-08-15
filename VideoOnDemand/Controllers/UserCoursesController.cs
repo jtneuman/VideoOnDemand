@@ -64,6 +64,7 @@ namespace VideoOnDemand.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             ViewData["CourseId"] = new SelectList(_db.Courses, "Id", "Title");
@@ -71,5 +72,52 @@ namespace VideoOnDemand.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("UserId, CourseId")] UserCourseDTO userCourse)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _db.Add(userCourse);
+                    await _db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+
+                    ModelState.AddModelError("", "That combination already exists.");
+                }
+              
+            }
+            ViewData["CourseId"] = new SelectList(_db.Courses, "Id", "Title",
+                  userCourse.CourseId);
+            ViewData["UserId"] = new SelectList(_userStore.Users, "Id", "Email");
+
+            return View();
+        }
+
+        public async Task<IActionResult> Edit(string userId, int courseId)
+        {
+            if (userId == null || courseId.Equals(default(int)))
+            {
+                return NotFound();
+            }
+            var model = await _db.UserCourses.SingleOrDefaultAsync(m => m.UserId.Equals(userId) &&
+                m.CourseId.Equals(courseId));
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["CourseId"] = new SelectList(_db.Courses, "Id", "Title");
+            ViewData["UserId"] = new SelectList(_userStore.Users, "Id", "Email");
+            return View(model);
+
+        }
+
     }
 }
