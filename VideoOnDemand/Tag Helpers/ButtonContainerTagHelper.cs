@@ -12,9 +12,15 @@ namespace VideoOnDemand.Tag_Helpers
     public class ButtonContainerTagHelper : TagHelper
     {
         public string Controller { get; set; }
-
         public string Actions { get; set; }
         public string Descriptions { get; set; }
+        public bool UseGlyphs { get; set; }
+        private Dictionary<string, string> ButtonGlyphs =
+            new Dictionary<string, string>
+            {
+                { "edit", "pencil" },{ "create", "th-list" }, { "delete", "remove" },
+                { "details", "info-sign" }, { "index", "list-alt" }
+            };
 
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -32,6 +38,8 @@ namespace VideoOnDemand.Tag_Helpers
             var href = "";
             var actions = Actions.Split(',');
             var descriptions = Descriptions != null ? Descriptions.Split(',') : new string[0];
+            var ids = context.AllAttributes.Where(c => c.Name.StartsWith("id"));
+
             foreach (var action in actions)
             {
                 if (Controller != null && Controller.Length > 0)
@@ -48,7 +56,28 @@ namespace VideoOnDemand.Tag_Helpers
 
                 if (description.Length.Equals(0)) description = action;
 
-                output.Content.AppendHtml($@"<a {href}>{description}</a>");
+                var param = "";
+                foreach (var id in ids)
+                {
+                    var splitId = id.Name.Split('-');
+                    if (splitId.Length.Equals(1)) param = $"Id={id.Value}";
+                    if (splitId.Length.Equals(2)) param += $"&{splitId[1]}={id.Value}";
+                    if (param.StartsWith("&")) param = param.Substring(1);
+                }
+                if (param.Length > 0) href = href.Insert(href.Length - 1, $"?{param}");
+
+                var classAttr = "";
+                if (UseGlyphs)
+                {
+                    var glyph = "";
+                    ButtonGlyphs.TryGetValue(action.ToLower(), out glyph);
+                    if (glyph != null && glyph.Length > 0)
+                    {
+                        classAttr = $"class='glyphicon glyphicon-{glyph}'";
+                        description = string.Empty;
+                    }
+                }
+                output.Content.AppendHtml($@"<a {href}><span {classAttr}></span>{description}</a>");
             }
             // adding closing span tag
             output.Content.AppendHtml("</span>");
