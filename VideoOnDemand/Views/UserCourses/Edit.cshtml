@@ -63,6 +63,6 @@
 </form>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <button-container controller="@ViewContext.RouteData.Values["controller"].ToString()" actions="Index,Edit" id-userId="@Model.UserId" id-courseId="@Model.CourseId" descriptions="Back to List"></button-container>
 </div>
 
