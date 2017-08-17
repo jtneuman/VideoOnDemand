@@ -21,6 +21,12 @@ namespace VideoOnDemand.Tag_Helpers
                 { "edit", "pencil" },{ "create", "th-list" }, { "delete", "remove" },
                 { "details", "info-sign" }, { "index", "list-alt" }
             };
+        private Dictionary<string, string> ButtonTypes =
+            new Dictionary<string, string>
+            {
+                { "edit", "success" }, { "create", "primary" }, { "delete", "danger" },
+                { "details", "primary" }, { "index", "primary" }
+            };
 
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -77,7 +83,15 @@ namespace VideoOnDemand.Tag_Helpers
                         description = string.Empty;
                     }
                 }
-                output.Content.AppendHtml($@"<a {href}><span {classAttr}></span>{description}</a>");
+
+                var button = "";
+                ButtonTypes.TryGetValue(action.ToLower(), out button);
+                var buttonClass = string.Empty;
+
+                if (button != null && button.Length > 0)
+                    buttonClass = $@"class='btn-sm btn-{button}'";
+
+                output.Content.AppendHtml($@"<a {buttonClass} {href}><span {classAttr}></span>{description}</a>");
             }
             // adding closing span tag
             output.Content.AppendHtml("</span>");

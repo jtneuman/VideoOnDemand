@@ -52,8 +52,8 @@ namespace VideoOnDemand.Data
 
             var userCourses = new List<UserCourse>
             {
-                new UserCourse { UserId = "94f817fc-dab1-499a-b95a-820e4f4d15a4", CourseId = 1 },
-                new UserCourse { UserId = "94f817fc-dab1-499a-b95a-820e4f4d15a4", CourseId = 3 }
+                new UserCourse { UserId = "f916abc4-a036-4da2-997b-0b97792a0aa2", CourseId = 1 },
+                new UserCourse { UserId = "f916abc4-a036-4da2-997b-0b97792a0aa2", CourseId = 3 }
             };
             context.UserCourses.AddRange(userCourses);
             context.SaveChanges();
